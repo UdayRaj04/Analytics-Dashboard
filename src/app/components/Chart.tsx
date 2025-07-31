@@ -3,16 +3,52 @@ import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell
 } from "recharts";
 
-export const ChartSection = ({ metrics }: { metrics: any }) => {
-  const data = metrics.campaigns.map((c: any) => ({
+
+
+// export const ChartSection = ({ metrics }: { metrics: any }) => {
+//   const data = metrics.campaigns.map((c: any) => ({
+//     name: c.campaign,
+//     impressions: c.impressions,
+//     clicks: c.clicks,
+//   }));
+//   const pieData = [
+//     { name: "Clicks", value: data.reduce((sum: any, d: any) => sum + d.clicks, 0) },
+//     { name: "Impressions", value: data.reduce((sum: any, d: any) => sum + d.impressions, 0) },
+//   ];
+//   const COLORS = ["#4f46e5", "#10b981"];
+
+type Campaign = {
+  campaign: string;
+  impressions: number;
+  clicks: number;
+};
+
+type Metrics = {
+  revenue: number;
+  users: number;
+  conversions: number;
+  growth: number;
+  campaigns: Campaign[];
+};
+
+export const ChartSection = ({ metrics }: { metrics: Metrics }) => {
+  const data = metrics.campaigns.map((c) => ({
     name: c.campaign,
     impressions: c.impressions,
     clicks: c.clicks,
   }));
+
   const pieData = [
-    { name: "Clicks", value: data.reduce((sum: any, d: any) => sum + d.clicks, 0) },
-    { name: "Impressions", value: data.reduce((sum: any, d: any) => sum + d.impressions, 0) },
+    {
+      name: "Clicks",
+      value: data.reduce((sum, d) => sum + d.clicks, 0),
+    },
+    {
+      name: "Impressions",
+      value: data.reduce((sum, d) => sum + d.impressions, 0),
+    },
   ];
+
   const COLORS = ["#4f46e5", "#10b981"];
 
   return (

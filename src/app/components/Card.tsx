@@ -1,7 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
 
-export const CardList = ({ metrics }: { metrics: any }) => {
+type Metrics = {
+  revenue: number;
+  users: number;
+  conversions: number;
+  growth: number;
+};
+
+export const CardList = ({ metrics }: { metrics: Metrics }) => {
   const cards = [
     { label: "Revenue", value: `$${metrics.revenue.toLocaleString()}` },
     { label: "Users", value: metrics.users.toLocaleString() },
