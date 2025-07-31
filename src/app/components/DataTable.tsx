@@ -19,8 +19,9 @@ import autoTable from "jspdf-autotable";
 
 
 
-export const DataTable = () => {
-  const [data, setData] = useState<User[]>([]);
+export const DataTable = ({ rows }: { rows: any[] }) => {
+const [data, setData] = useState<User[]>(rows || []);
+
   const [search, setSearch] = useState("");
   const [sortField, setSortField] = useState<keyof User>("id");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -96,7 +97,7 @@ export const DataTable = () => {
   };
 
   const exportToCSV = () => {
-  const csv = Papa.unparse(data); // Replace `data` with filtered or all data
+  const csv = Papa.unparse(filteredData); // Replace `data` with filtered or all data
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -110,8 +111,8 @@ export const DataTable = () => {
 const exportToPDF = () => {
   const doc = new jsPDF();
   autoTable(doc, {
-    head: [Object.keys(data[0])],
-    body: data.map((row) => Object.values(row)),
+    head: [Object.keys(filteredData[0])],
+    body: filteredData.map((row) => Object.values(row)),
   });
   doc.save("data.pdf");
 };
